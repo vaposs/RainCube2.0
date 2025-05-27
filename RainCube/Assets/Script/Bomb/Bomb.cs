@@ -7,8 +7,6 @@ using UnityEngine;
 
 public class Bomb : MonoBehaviour
 {
-    public static Action<Bomb> ReturnPool;
-
     [SerializeField] private float _timeChangeColor;
     [SerializeField] private float _timeDelete;
 
@@ -20,6 +18,8 @@ public class Bomb : MonoBehaviour
     private MeshRenderer _meshRenderer;
     private Color _startColor;
     private Color _endColor;
+
+    public event Action<Bomb> ReturnedPool;
 
     private void Awake()
     {
@@ -34,6 +34,7 @@ public class Bomb : MonoBehaviour
         _timeChangeColor = UnityEngine.Random.Range(_minTimeChangeColor, _maxTimeChangeColor);
         Changer();
     }
+
     private void Changer()
     {
         _meshRenderer.material.DOColor(_endColor, _timeChangeColor).OnComplete(OnFinish);
@@ -42,7 +43,7 @@ public class Bomb : MonoBehaviour
     private void OnFinish()
     {
         Explosion();
-        ReturnPool?.Invoke(this);
+        ReturnedPool?.Invoke(this);
     }
 
     private void Explosion()

@@ -1,14 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
-public class Counter : MonoBehaviour
+public abstract class Counter : MonoBehaviour
 {
-    public event Action<int> ChangedInstanstiateCount;
-    public event Action<int> ChangeEnableCount;
-    public event Action<int> ActivedObject;
-
     private int _countInstanstiate;
     private int _countSpawn;
     private int _countActive;
@@ -16,24 +13,28 @@ public class Counter : MonoBehaviour
     public void AddInstanstiate()
     {
         _countInstanstiate++;
-        ChangedInstanstiateCount?.Invoke(_countInstanstiate);
+        DrawInstanstiate(_countInstanstiate);
     }
 
     public void AddEnable()
     {
         _countSpawn++;
-        ChangeEnableCount?.Invoke(_countSpawn);
+        DrawEnable(_countSpawn);
     }
 
     public void ActiveObjectePlus()
     {
         _countActive++;
-        ActivedObject?.Invoke(_countActive);
+        DrawActive(_countActive);
     }
 
     public void ActiveObjecteMinus()
     {
         _countActive--;
-        ActivedObject?.Invoke(_countActive);
+        DrawActive(_countActive);
     }
+
+    public abstract void DrawInstanstiate(int count);
+    public abstract void DrawEnable(int count);
+    public abstract void DrawActive(int count);
 }
