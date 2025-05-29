@@ -362,6 +362,7 @@
 "Assets/Script/Pool/Platform.cs"
 "Assets/Script/Spawner/SpawnerBomb.cs"
 "Assets/Script/Spawner/SpawnerCube.cs"
+"Assets/Script/Замечания.cs"
 -langversion:9.0
 /deterministic
 /optimize+
