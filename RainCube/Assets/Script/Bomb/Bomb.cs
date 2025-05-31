@@ -2,16 +2,17 @@ using System;
 using DG.Tweening;
 using UnityEngine;
 
+[RequireComponent(typeof(Explosion))]
+
 public class Bomb : MonoBehaviour
 {
     [SerializeField] private float _timeChangeColor;
     [SerializeField] private float _timeDelete;
 
-    private float _explosionRadiys = 30;
     private float _minTimeChangeColor = 2f;
     private float _maxTimeChangeColor = 5f;
-    private float _forse = 500f;
 
+    private Explosion _explosion;
     private MeshRenderer _meshRenderer;
     private Color _startColor;
     private Color _endColor;
@@ -20,6 +21,7 @@ public class Bomb : MonoBehaviour
 
     private void Awake()
     {
+        _explosion = GetComponent<Explosion>();
         _meshRenderer = GetComponent<MeshRenderer>();
         _startColor = _meshRenderer.material.color;
         _endColor = new Color(_startColor.r, _startColor.g, _startColor.b, 0);
@@ -39,20 +41,7 @@ public class Bomb : MonoBehaviour
 
     private void OnFinish()
     {
-        Explosion();
+        _explosion.Explosions();
         ReturnedPool?.Invoke(this);
-    }
-
-    private void Explosion()
-    {
-        Collider[] hits = Physics.OverlapSphere(transform.position, _explosionRadiys);
-
-        for (int i = 0; i < hits.Length; i++)
-        {
-            if (hits[i].TryGetComponent<Rigidbody>(out Rigidbody rigidbody))
-            {
-                rigidbody.AddExplosionForce(_forse, transform.position, _explosionRadiys);
-            }
-        }
     }
 }

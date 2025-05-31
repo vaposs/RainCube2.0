@@ -3,7 +3,6 @@ using UnityEngine.UI;
 
 public class DrawCounter : MonoBehaviour
 {
-
     [SerializeField] private Text _spawnCountItem;
     [SerializeField] private Text _instantiateCountItem;
     [SerializeField] private Text _activeCountItem;
