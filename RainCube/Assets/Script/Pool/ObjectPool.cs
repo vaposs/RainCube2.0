@@ -4,13 +4,8 @@ using UnityEngine;
 
 public class ObjectPool<T> where T : MonoBehaviour
 {
-    private Queue<T> _storage;
+    private Queue<T> _storage = new Queue<T>();
     private T _tempT;
-
-    public void Initialization()
-    {
-        _storage = new Queue<T>();
-    }
 
     public T GetItem(T cube, Transform conteiner)
     {
@@ -35,7 +30,7 @@ public class ObjectPool<T> where T : MonoBehaviour
 
     public bool TakeCountPool()
     {
-        if((_storage.Count == 0))
+        if ((_storage.Count == 0))
         {
             return true;
         }

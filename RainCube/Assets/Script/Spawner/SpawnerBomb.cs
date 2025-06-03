@@ -1,45 +1,28 @@
-using System;
 using UnityEngine;
 
-public class SpawnerBomb : MonoBehaviour
+public class SpawnerBomb : Spawner<Bomb>
 {
-    [SerializeField] private Bomb _bomb;
-    [SerializeField] private Transform _conteiner;
-    [SerializeField] private Counter _counter;
-
-    private ObjectPool<Bomb> _objectPoolBomb;
-    private Bomb _tempBomb;
-
-    private void Awake()
+    public override void SpawnBomb(Vector3 spawnPosition)
     {
-        _objectPoolBomb = new ObjectPool<Bomb>();
-        _objectPoolBomb.Initialization();
-    }
-
-    public void SpawnBomb(Vector3 spawnPosition)
-    {
-        if (_objectPoolBomb.TakeCountPool() == true)
+        if (ObjectPool.TakeCountPool() == true)
         {
-            _counter.AddInstanstiate();
+            InstantiatePlus();
         }
         else
         {
-            _counter.AddEnable();
+            EnablePlus();
         }
 
-        _counter.ActiveObjectePlus();
-
-
-        _tempBomb = _objectPoolBomb.GetItem(_bomb, _conteiner);
-        _tempBomb.ReturnedPool += OnReturnedPool;
-        _tempBomb.transform.position = spawnPosition;
+        ActivPlus();
+        TempItem = ObjectPool.GetItem(PrefabItem, Conteiner);
+        TempItem.ReturnedPool += OnReturnedPool;
+        TempItem.transform.position = spawnPosition;
     }
 
-    private void OnReturnedPool(Bomb bomb)
+    public override void OnReturnedPool(Bomb bomb)
     {
-        _counter.ActiveObjecteMinus();
         bomb.ReturnedPool -= OnReturnedPool;
-        _objectPoolBomb.PutObject(bomb);
+        ActivMinus();
+        ObjectPool.PutObject(bomb);
     }
 }
-

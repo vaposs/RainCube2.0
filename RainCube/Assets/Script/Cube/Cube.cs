@@ -4,26 +4,18 @@ using UnityEngine;
 
 [RequireComponent(typeof(MeshRenderer))]
 
-public class Cube : MonoBehaviour
+public class Cube: SpawnItem
 {
-    private float _minTimeDelete = 2f;
-    private float _maxTimeDelete = 5f;
     private WaitForSeconds _wait;
     private Coroutine _coroutine = null;
-    private MeshRenderer _meshRenderer;
-    private bool _isColorChanged = true;
+    private bool _isCollided = true;
 
     public event Action<Cube> ReturnedPool;
 
-    private void Awake()
-    {
-        _meshRenderer = GetComponent<MeshRenderer>();
-    }
-
     private void OnEnable()
     {
-        _meshRenderer.material.color = Color.white;
-        _isColorChanged = true;
+        MeshRenderer.material.color = Color.white;
+        _isCollided = true;
 
         if (_coroutine != null)
         {
@@ -34,13 +26,13 @@ public class Cube : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.TryGetComponent(out Platform returnPool))
+        if (_isCollided == true)
         {
-            if(_isColorChanged == true)
+            if (collision.gameObject.TryGetComponent(out Platform returnPool))
             {
-                _isColorChanged = false;
-                _wait = new WaitForSeconds(UnityEngine.Random.Range(_minTimeDelete, _maxTimeDelete));
-                _meshRenderer.material.color = UnityEngine.Random.ColorHSV();
+                _isCollided = false;
+                _wait = new WaitForSeconds(UnityEngine.Random.Range(MinTime, MaxTime));
+                MeshRenderer.material.color = UnityEngine.Random.ColorHSV();
 
                 if (_coroutine == null)
                 {

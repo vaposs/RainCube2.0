@@ -1,34 +1,24 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
-public class SpawnerCube : MonoBehaviour
+public class SpawnerCube : Spawner<Cube>
 {
     [SerializeField] private float _delay;
-    [SerializeField] private SpawnerBomb _spawnerBomb;
-    [SerializeField] private Cube _cube;
-    [SerializeField] private Transform _conteiner;
     [SerializeField] private int _spawnPositionY = 10;
     [SerializeField] private int _minSpawnPosition = -5;
     [SerializeField] private int _maxSpawnPosition = 5;
-    [SerializeField] private Counter _counter;
+    [SerializeField] private SpawnerBomb _spawnerBomb;
 
     private Vector3 _spawnPosition;
     private float _spawnPositionX;
     private float _spawnPositionZ;
-    private ObjectPool<Cube> _objectPoolCube;
-    private Cube _tempCube;
-    private WaitForSeconds _wait;
 
-    private void Awake()
-    {
-        _objectPoolCube = new ObjectPool<Cube>();
-        _objectPoolCube.Initialization();
-        _wait = new WaitForSeconds(_delay);
-    }
+    private WaitForSeconds _wait;
 
     private void OnEnable()
     {
+        _wait = new WaitForSeconds(_delay);
+
         StartCoroutine(Spawn());
     }
 
@@ -36,38 +26,37 @@ public class SpawnerCube : MonoBehaviour
     {
         while (enabled)
         {
-            _spawnPositionX = UnityEngine.Random.Range(_minSpawnPosition, _maxSpawnPosition);
-            _spawnPositionZ = UnityEngine.Random.Range(_minSpawnPosition, _maxSpawnPosition);
+            _spawnPositionX = Random.Range(_minSpawnPosition, _maxSpawnPosition);
+            _spawnPositionZ = Random.Range(_minSpawnPosition, _maxSpawnPosition);
             _spawnPosition = new Vector3(_spawnPositionX, _spawnPositionY, _spawnPositionZ);
 
-            if(_objectPoolCube.TakeCountPool() == true)
+            if (ObjectPool.TakeCountPool() == true)
             {
-                _counter.AddInstanstiate();
+                InstantiatePlus();
             }
             else
             {
-                _counter.AddEnable();
+                EnablePlus();
             }
 
-            _counter.ActiveObjectePlus();
-
-            _tempCube = _objectPoolCube.GetItem(_cube, _conteiner);
-            _tempCube.ReturnedPool += OnReturnedPool;
-            _tempCube.transform.position = _spawnPosition;
+            ActivPlus();
+            TempItem = ObjectPool.GetItem(PrefabItem, Conteiner);
+            TempItem.ReturnedPool += OnReturnedPool;
+            TempItem.transform.position = _spawnPosition;
             yield return _wait;
         }
     }
 
-    private void CreateBomb(Vector3 vector3)
+    public override void SpawnBomb(Vector3 vector3)
     {
         _spawnerBomb.SpawnBomb(vector3);
     }
 
-    private void OnReturnedPool(Cube cube)
+    public override void OnReturnedPool(Cube cube)
     {
         cube.ReturnedPool -= OnReturnedPool;
-        _counter.ActiveObjecteMinus();
-        CreateBomb(cube.transform.position);
-        _objectPoolCube.PutObject(cube);
+        SpawnBomb(cube.transform.position);
+        ActivMinus();
+        ObjectPool.PutObject(cube);
     }
 }

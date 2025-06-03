@@ -253,7 +253,6 @@ GameObject:
   - component: {fileID: 257082541}
   - component: {fileID: 257082540}
   - component: {fileID: 257082542}
-  - component: {fileID: 257082543}
   m_Layer: 0
   m_Name: NameBomb
   m_TagString: Untagged
@@ -331,25 +330,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 257082538}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49748b3eb0dc94824919203e612cabfb, type: 3}
+  m_Script: {fileID: 11500000, guid: 49fb1fbd9ff12480daec4501a9698774, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _spawnCountItem: {fileID: 1601259684}
   _instantiateCountItem: {fileID: 517755530}
   _activeCountItem: {fileID: 1032726137}
---- !u!114 &257082543
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 257082538}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 37fd3d62154a04d5c980939f3b96c07d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _drawCounter: {fileID: 257082542}
+  Spawner: {fileID: 1033471791}
 --- !u!1 &284194867
 GameObject:
   m_ObjectHideFlags: 0
@@ -1230,7 +1217,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1033471790}
   - component: {fileID: 1033471789}
-  - component: {fileID: 1033471793}
+  - component: {fileID: 1033471791}
   m_Layer: 0
   m_Name: Spawner
   m_TagString: GameController
@@ -1250,14 +1237,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0a278e129e844d828cd78a83d755fe5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PrefabItem: {fileID: 7355824357805288617, guid: 229c969d5c1e54d6a98d3f927410478f, type: 3}
+  Conteiner: {fileID: 984539731}
   _delay: 1
-  _spawnerBomb: {fileID: 1033471793}
-  _cube: {fileID: 7355824357805288617, guid: 229c969d5c1e54d6a98d3f927410478f, type: 3}
-  _conteiner: {fileID: 984539731}
   _spawnPositionY: 25
   _minSpawnPosition: -18
   _maxSpawnPosition: 18
-  _counter: {fileID: 1665681068}
+  _spawnerBomb: {fileID: 1033471791}
 --- !u!4 &1033471790
 Transform:
   m_ObjectHideFlags: 0
@@ -1275,7 +1261,7 @@ Transform:
   - {fileID: 984539731}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1033471793
+--- !u!114 &1033471791
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1287,9 +1273,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95e7b20b553c347e3bef80241e413fc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bomb: {fileID: 6769249408425996053, guid: c3f155495f2374cebbb191fa8eed857f, type: 3}
-  _conteiner: {fileID: 968453636}
-  _counter: {fileID: 257082543}
+  PrefabItem: {fileID: 6769249408425996053, guid: c3f155495f2374cebbb191fa8eed857f, type: 3}
+  Conteiner: {fileID: 968453636}
 --- !u!1 &1102736220
 GameObject:
   m_ObjectHideFlags: 0
@@ -1903,7 +1888,6 @@ GameObject:
   - component: {fileID: 1665681066}
   - component: {fileID: 1665681065}
   - component: {fileID: 1665681067}
-  - component: {fileID: 1665681068}
   m_Layer: 0
   m_Name: NameCube
   m_TagString: Untagged
@@ -1987,19 +1971,7 @@ MonoBehaviour:
   _spawnCountItem: {fileID: 721602559}
   _instantiateCountItem: {fileID: 601642019}
   _activeCountItem: {fileID: 2092046494}
---- !u!114 &1665681068
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1665681063}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 37fd3d62154a04d5c980939f3b96c07d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _drawCounter: {fileID: 1665681067}
+  Spawner: {fileID: 1033471789}
 --- !u!1 &1888324857
 GameObject:
   m_ObjectHideFlags: 0
