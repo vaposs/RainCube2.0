@@ -366,7 +366,6 @@
 "Assets/Script/Spawner/SpawnerBomb.cs"
 "Assets/Script/Spawner/SpawnerCube.cs"
 "Assets/Script/Spawner/SpawnItem.cs"
-"Assets/Script/Замечания.cs"
 -langversion:9.0
 /deterministic
 /optimize+

@@ -5,20 +5,21 @@ using UnityEngine;
 public class ObjectPool<T> where T : MonoBehaviour
 {
     private Queue<T> _storage = new Queue<T>();
-    private T _tempT;
 
     public T GetItem(T cube, Transform conteiner)
     {
+        T tempT;
+
         if (_storage.Count == 0)
         {
-            _tempT = GameObject.Instantiate(cube, conteiner);
-            return _tempT; 
+             tempT = GameObject.Instantiate(cube, conteiner);
+            return tempT; 
         }
         else
         {
-            _tempT = _storage.Dequeue();
-            _tempT.gameObject.SetActive(true);
-            return _tempT;
+            tempT = _storage.Dequeue();
+            tempT.gameObject.SetActive(true);
+            return tempT;
         }
     }
 
@@ -28,15 +29,8 @@ public class ObjectPool<T> where T : MonoBehaviour
         _storage.Enqueue(tempItem);
     }
 
-    public bool TakeCountPool()
+    public bool TakeCount()
     {
-        if ((_storage.Count == 0))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return _storage.Count == 0 ? true: false;
     }
 }

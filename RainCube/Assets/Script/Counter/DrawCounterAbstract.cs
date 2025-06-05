@@ -10,16 +10,14 @@ public class DrawCounterAbstract<T> : MonoBehaviour where T : SpawnItem
 
     private void OnEnable()
     {
-        Spawner.ChangedActiveCountMinus += DrawActive;
-        Spawner.ChangedActiveCountPlus += DrawActive;
+        Spawner.ChangedActiveCount += DrawActive;
         Spawner.ChangedEnableCount += DrawEnable;
         Spawner.ChangedInstanstiateCount += DrawInstanstiate;
     }
 
     private void OnDisable()
     {
-        Spawner.ChangedActiveCountMinus -= DrawActive;
-        Spawner.ChangedActiveCountPlus -= DrawActive;
+        Spawner.ChangedActiveCount -= DrawActive;
         Spawner.ChangedEnableCount -= DrawEnable;
         Spawner.ChangedInstanstiateCount -= DrawInstanstiate;
     }

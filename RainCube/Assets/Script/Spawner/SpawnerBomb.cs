@@ -2,18 +2,10 @@ using UnityEngine;
 
 public class SpawnerBomb : Spawner<Bomb>
 {
-    public override void SpawnBomb(Vector3 spawnPosition)
+    public override void SpawnItem(Vector3 spawnPosition)
     {
-        if (ObjectPool.TakeCountPool() == true)
-        {
-            InstantiatePlus();
-        }
-        else
-        {
-            EnablePlus();
-        }
+        Count();
 
-        ActivPlus();
         TempItem = ObjectPool.GetItem(PrefabItem, Conteiner);
         TempItem.ReturnedPool += OnReturnedPool;
         TempItem.transform.position = spawnPosition;
@@ -22,7 +14,7 @@ public class SpawnerBomb : Spawner<Bomb>
     public override void OnReturnedPool(Bomb bomb)
     {
         bomb.ReturnedPool -= OnReturnedPool;
-        ActivMinus();
+        ReduceCountActiveItem();
         ObjectPool.PutObject(bomb);
     }
 }

@@ -1,4 +1,5 @@
 using System.Collections;
+using UnityEditor;
 using UnityEngine;
 
 public class SpawnerCube : Spawner<Cube>
@@ -30,16 +31,8 @@ public class SpawnerCube : Spawner<Cube>
             _spawnPositionZ = Random.Range(_minSpawnPosition, _maxSpawnPosition);
             _spawnPosition = new Vector3(_spawnPositionX, _spawnPositionY, _spawnPositionZ);
 
-            if (ObjectPool.TakeCountPool() == true)
-            {
-                InstantiatePlus();
-            }
-            else
-            {
-                EnablePlus();
-            }
+            Count();
 
-            ActivPlus();
             TempItem = ObjectPool.GetItem(PrefabItem, Conteiner);
             TempItem.ReturnedPool += OnReturnedPool;
             TempItem.transform.position = _spawnPosition;
@@ -47,16 +40,16 @@ public class SpawnerCube : Spawner<Cube>
         }
     }
 
-    public override void SpawnBomb(Vector3 vector3)
+    public override void SpawnItem(Vector3 vector3)
     {
-        _spawnerBomb.SpawnBomb(vector3);
+        _spawnerBomb.SpawnItem(vector3);
     }
 
     public override void OnReturnedPool(Cube cube)
     {
         cube.ReturnedPool -= OnReturnedPool;
-        SpawnBomb(cube.transform.position);
-        ActivMinus();
+        SpawnItem(cube.transform.position);
+        ReduceCountActiveItem();
         ObjectPool.PutObject(cube);
     }
 }

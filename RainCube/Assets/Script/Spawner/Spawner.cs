@@ -15,35 +15,47 @@ public abstract class Spawner<T>: MonoBehaviour where T : SpawnItem
 
     public event Action<int> ChangedInstanstiateCount;
     public event Action<int> ChangedEnableCount;
-    public event Action<int> ChangedActiveCountPlus;
-    public event Action<int> ChangedActiveCountMinus;
+    public event Action<int> ChangedActiveCount;
 
-    public abstract void SpawnBomb(Vector3 spawnPosition);
+    public abstract void SpawnItem(Vector3 spawnPosition);
 
     public abstract void OnReturnedPool(T item);
 
-    protected void ActivPlus()
+    protected void IncreaseCountActiveItem()
     {
         ActiveItem++;
-        ChangedActiveCountPlus?.Invoke(ActiveItem);
+        ChangedActiveCount?.Invoke(ActiveItem);
     }
 
-    protected void ActivMinus()
+    protected void ReduceCountActiveItem()
     {
         ActiveItem--;
-        ChangedActiveCountPlus?.Invoke(ActiveItem);
+        ChangedActiveCount?.Invoke(ActiveItem);
     }
 
-    protected void EnablePlus()
+    protected void IncreaseCountEnableItem()
     {
         EnableItem++;
         ChangedEnableCount?.Invoke(EnableItem);
     }
 
-    protected void InstantiatePlus()
+    protected void IncreaseCountInstanstiateItem()
     {
         InstantiateItem++;
         ChangedInstanstiateCount?.Invoke(InstantiateItem);
     }
-    
+
+    protected void Count()
+    {
+        if (ObjectPool.TakeCount() == true)
+        {
+            IncreaseCountInstanstiateItem();
+        }
+        else
+        {
+            IncreaseCountEnableItem();
+        }
+
+        IncreaseCountActiveItem();
+    }
 }
